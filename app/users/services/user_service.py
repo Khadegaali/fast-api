@@ -1,8 +1,7 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
-# ──────────────────────────────────────────────────────────────
-#  الـ import الصحيح (استبدل الـ import الغلط القديم)
+
 from app.users.repositories.user_repository import (
     create_user,
     get_all_users,
