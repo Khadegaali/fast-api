@@ -10,7 +10,7 @@ class UserService:
     def __init__(self, user_repository: UserRepository):
         self.user_repository = user_repository
 
-    # ================= CREATE
+    #  CREATE
     def create_user(self, db: Session, user: UserCreate) -> UserResponse:
         if self.user_repository.get_user_by_email(db, user.email):
             raise HTTPException(status_code=400, detail="Email already registered")
@@ -20,19 +20,19 @@ class UserService:
         db_user = self.user_repository.create_user(db, user_data)
         return UserResponse.from_orm(db_user)
 
-    # ================= READ ALL
+    # READ ALL
     def get_users(self, db: Session) -> list[UserResponse]:
         users = self.user_repository.get_all_users(db)
         return [UserResponse.from_orm(u) for u in users]
 
-    # ================= READ ONE
+    # READ ONE
     def get_user(self, db: Session, user_id: int) -> UserResponse:
         user = self.user_repository.get_user_by_id(db, user_id)
         if not user:
             raise HTTPException(status_code=404, detail="User not found")
         return UserResponse.from_orm(user)
 
-    # ================= UPDATE FULL
+    # UPDATE FULL
     def update_user(self, db: Session, user_id: int, user_data: UserUpdate) -> UserResponse:
         update_data = user_data.model_dump(exclude_unset=True)
         if "password" in update_data:
@@ -42,7 +42,7 @@ class UserService:
             raise HTTPException(status_code=404, detail="User not found")
         return UserResponse.from_orm(user)
 
-    # ================= PATCH PARTIAL
+    # PATCH PARTIAL
     def patch_user(self, db: Session, user_id: int, user_data: dict) -> UserResponse:
         if "password" in user_data:
             user_data["password"] = hash_password(user_data["password"])
@@ -51,7 +51,7 @@ class UserService:
             raise HTTPException(status_code=404, detail="User not found")
         return UserResponse.from_orm(user)
 
-    # ================= DELETE
+    # DELETE
     def delete_user(self, db: Session, user_id: int):
         user = db.query(User).filter(User.id == user_id).first()
         if not user:
