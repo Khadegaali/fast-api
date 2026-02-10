@@ -1,8 +1,5 @@
-# main.py
 from fastapi import FastAPI
 from app.database import Base, engine
-
-# استيراد الروترات من المسارات الصحيحة
 from app.tables.routers.user_router import router as user_router
 from app.tables.routers.item_router import router as item_router
 from app.tables.routers.user_item_router import router as user_item_router
@@ -10,10 +7,9 @@ from app.tables.routers.auth_router import router as auth_router
 
 Base.metadata.create_all(bind=engine)
 
-# إنشاء تطبيق FastAPI
 app = FastAPI(title="FastAPI project")
 
-# إضافة الروترات
+
 app.include_router(user_router)
 app.include_router(item_router)
 app.include_router(user_item_router)
