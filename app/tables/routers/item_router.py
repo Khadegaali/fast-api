@@ -8,7 +8,7 @@ from app.tables.services.item_service import ItemService
 
 router = APIRouter(prefix="/items", tags=["Items"])
 
-# دوال للحصول على Repository وService
+
 def get_item_repository(db: Session = Depends(get_db)):
     return ItemRepository(db)
 
