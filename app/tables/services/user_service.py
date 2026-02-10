@@ -51,7 +51,7 @@ class UserService:
             raise HTTPException(status_code=404, detail="User not found")
         return UserResponse.from_orm(user)
 
-    # DELETE
+    # delete
     def delete_user(self, db: Session, user_id: int):
         user = db.query(User).filter(User.id == user_id).first()
         if not user:
