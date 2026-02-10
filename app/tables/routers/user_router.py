@@ -13,7 +13,7 @@ router = APIRouter(prefix="/users", tags=["Users"])
 user_repository = UserRepository()
 user_service = UserService(user_repository)
 
-# ================= GET MY PROFILE (protected)
+# GET MY PROFILE (protected)
 @router.get("/me", response_model=UserResponse)
 def me(
     user_id: int = Depends(get_current_user_id),
@@ -21,7 +21,7 @@ def me(
 ):
     return user_service.get_user(db, user_id)
 
-# ================= CRUD (protected)
+#CRUD (protected)
 @router.get("/", response_model=list[UserResponse])
 def get_users(
     current_user_id: int = Depends(get_current_user_id),
