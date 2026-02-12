@@ -1,14 +1,12 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-
-from app.database import get_db
 from app.tables.schemas.item_schema import ItemCreate
 from app.tables.repositories.item_repository import ItemRepository
 from app.tables.services.item_service import ItemService
+from app.database import get_db
 
 router = APIRouter(prefix="/items", tags=["Items"])
 
-# دوال للحصول على Repository وService
 def get_item_repository(db: Session = Depends(get_db)):
     return ItemRepository(db)
 

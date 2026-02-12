@@ -2,7 +2,7 @@ from passlib.context import CryptContext
 from datetime import datetime, timedelta
 from jose import jwt
 
-SECRET_KEY = "YOUR_SECRET_KEY_HERE"  # غيري ده لمفتاحك السري
+SECRET_KEY = "a_very_strong_secret_key_here_123456"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
