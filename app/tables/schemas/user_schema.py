@@ -17,7 +17,7 @@ class UserResponse(BaseModel):
     email: str
 
     class Config:
-        from_attributes = True  # بدل orm_mode في Pydantic v2
+        from_attributes = True 
 
 class LoginRequest(BaseModel):
     email: str
