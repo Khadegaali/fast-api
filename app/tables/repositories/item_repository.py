@@ -4,7 +4,7 @@ from app.tables.schemas.item_schema import ItemCreate
 
 class ItemRepository:
     def __init__(self, db: Session):
-        self.db = db  # خزن الـ session
+        self.db = db 
 
     def create_item(self, item: ItemCreate):
         db_item = Item(name=item.name)
