@@ -10,7 +10,7 @@ class UserService:
     def __init__(self, user_repository: UserRepository):
         self.user_repository = user_repository
 
-    # ================= CREATE
+    # CREATE
     def create_user(self, db: Session, user: UserCreate) -> UserResponse:
         existing_user = self.user_repository.get_user_by_email(user.email)
         if existing_user:
@@ -19,19 +19,19 @@ class UserService:
         db_user = self.user_repository.create_user(user)
         return UserResponse.model_validate(db_user)
 
-    # ================= READ ALL
+    # READ ALL
     def get_users(self, db: Session) -> list[UserResponse]:
         users = self.user_repository.get_all_users()
         return [UserResponse.model_validate(u) for u in users]
 
-    # ================= READ ONE
+    # READ ONE
     def get_user(self, db: Session, user_id: int) -> UserResponse:
         user = self.user_repository.get_user_by_id(user_id)
         if not user:
             raise HTTPException(status_code=404, detail="User not found")
         return UserResponse.model_validate(user)
 
-    # ================= UPDATE FULL
+    #  UPDATE FULL
     def update_user(self, db: Session, user_id: int, user_data: UserUpdate) -> UserResponse:
         update_data = user_data.model_dump(exclude_unset=True)
         user = self.user_repository.update_user(user_id, update_data)
@@ -39,14 +39,14 @@ class UserService:
             raise HTTPException(status_code=404, detail="User not found")
         return UserResponse.model_validate(user)
 
-    # ================= PATCH PARTIAL
+    #  PATCH PARTIAL
     def patch_user(self, db: Session, user_id: int, user_data: dict) -> UserResponse:
         user = self.user_repository.update_user(user_id, user_data)
         if not user:
             raise HTTPException(status_code=404, detail="User not found")
         return UserResponse.model_validate(user)
 
-    # ================= DELETE
+    # DELETE
     def delete_user(self, db: Session, user_id: int):
         user = self.user_repository.get_user_by_id(user_id)
         if not user:
