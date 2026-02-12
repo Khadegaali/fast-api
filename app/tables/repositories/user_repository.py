@@ -11,7 +11,7 @@ class UserRepository:
         db_user = User(
             name=user.name,
             email=user.email,
-            password=hash_password(user.password)  # ⚡ تخزين الباسورد مشفر
+            password=hash_password(user.password)  
         )
         self.db.add(db_user)
         self.db.commit()
