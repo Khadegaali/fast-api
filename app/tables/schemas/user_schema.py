@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
-
+from uuid import UUID
 class UserCreate(BaseModel):
     name: str
     email: str
@@ -12,12 +12,12 @@ class UserUpdate(BaseModel):
     password: Optional[str] = None
 
 class UserResponse(BaseModel):
-    id: int
+    id: UUID
     name: str
     email: str
 
     class Config:
-        from_attributes = True  # بدل orm_mode في Pydantic v2
+        from_attributes = True  
 
 class LoginRequest(BaseModel):
     email: str

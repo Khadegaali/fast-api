@@ -5,7 +5,7 @@ from app.tables.routers.item_router import router as item_router
 from app.tables.routers.user_item_router import router as user_item_router
 from app.tables.routers.auth_router import router as auth_router
 from app.tables.routers.llm_router import router as llm_router
-# Create tables in the selected database
+
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="FastAPI project")

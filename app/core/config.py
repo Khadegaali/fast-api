@@ -32,7 +32,11 @@ class Settings:
     DB_HOST: str = os.getenv("DB_HOST")
     DB_PORT: str = os.getenv("DB_PORT", "5432")
     DB_NAME: str = os.getenv("DB_NAME")
-    
+    # Supabase Storage
+    SUPABASE_URL: str = os.getenv("SUPABASE_URL")
+    SUPABASE_KEY: str = os.getenv("SUPABASE_SERVICE_KEY")
+    SUPABASE_BUCKET: str = os.getenv("SUPABASE_BUCKET", "upload_files")
+
     def __init__(self):
         print(f"  Settings loaded:")
         print(f"   DB_USER: {self.DB_USER}")

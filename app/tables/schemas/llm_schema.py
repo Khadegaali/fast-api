@@ -1,8 +1,14 @@
 from pydantic import BaseModel
+from typing import Optional
+from uuid import UUID
+
 
 class LLMRequest(BaseModel):
-      user_id: int
-      message: str
+    message: str
+    conversation_id: Optional[UUID] = None
+    max_tokens: int = 500
+
 
 class LLMResponse(BaseModel):
-    text: str
+    conversation_id: UUID
+    response: str
