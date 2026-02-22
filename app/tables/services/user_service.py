@@ -31,7 +31,7 @@ class UserService:
             raise HTTPException(status_code=404, detail="User not found")
         return UserResponse.model_validate(user)
 
-    #  UPDATE FULL
+    # UPDATE FULL
     def update_user(self, db: Session, user_id: int, user_data: UserUpdate) -> UserResponse:
         update_data = user_data.model_dump(exclude_unset=True)
         user = self.user_repository.update_user(user_id, update_data)
@@ -39,7 +39,7 @@ class UserService:
             raise HTTPException(status_code=404, detail="User not found")
         return UserResponse.model_validate(user)
 
-    #  PATCH PARTIAL
+    # PATCH PARTIAL
     def patch_user(self, db: Session, user_id: int, user_data: dict) -> UserResponse:
         user = self.user_repository.update_user(user_id, user_data)
         if not user:

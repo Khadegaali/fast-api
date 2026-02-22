@@ -1,12 +1,14 @@
 from sqlalchemy.orm import Session
+from uuid import UUID
 from app.tables.models.message import Message, Conversation
 from datetime import datetime
+
 
 class ConversationRepository:
     def __init__(self, db: Session):
         self.db = db
 
-    def create(self, user_id: int, title: str = None, first_message: str = None):
+    def create(self, user_id: UUID, title: str = None, first_message: str = None):
         if not title and first_message:
             title = first_message[:50] if len(first_message) > 50 else first_message
         elif not title:
@@ -21,8 +23,7 @@ class ConversationRepository:
         self.db.refresh(conversation)
         return conversation
 
-    def get_by_id(self, conversation_id: int, user_id: int):
-        """جيب conversation معينة (بس بتأكد إنها بتاعة الـ user ده)"""
+    def get_by_id(self, conversation_id: UUID, user_id: UUID):  
         return (
             self.db.query(Conversation)
             .filter(
@@ -32,8 +33,7 @@ class ConversationRepository:
             .first()
         )
 
-    def get_user_conversations(self, user_id: int):
-        """جيب كل الـ conversations بتاعة user"""
+    def get_user_conversations(self, user_id: UUID):  
         return (
             self.db.query(Conversation)
             .filter(Conversation.user_id == user_id)
@@ -41,15 +41,32 @@ class ConversationRepository:
             .all()
         )
 
-    def update_timestamp(self, conversation_id: int):
-        """حدّث آخر وقت للـ conversation"""
-        conversation = self.db.query(Conversation).filter(Conversation.id == conversation_id).first()
+    def update_timestamp(self, conversation_id: UUID):
+        conversation = (
+            self.db.query(Conversation)
+            .filter(Conversation.id == conversation_id)
+            .first()
+        )
         if conversation:
             conversation.updated_at = datetime.utcnow()
             self.db.commit()
 
-    def delete(self, conversation_id: int, user_id: int):
-        """امسح conversation"""
+    def update_title(self, conversation_id: UUID, new_title: str):
+        conversation = (
+            self.db.query(Conversation)
+            .filter(Conversation.id == conversation_id)
+            .first()
+        )
+        if not conversation:
+            return None
+
+        conversation.title = new_title
+        conversation.updated_at = datetime.utcnow()
+        self.db.commit()
+        self.db.refresh(conversation)
+        return conversation
+
+    def delete(self, conversation_id: UUID, user_id: UUID):  
         conversation = self.get_by_id(conversation_id, user_id)
         if conversation:
             self.db.delete(conversation)
@@ -62,20 +79,29 @@ class MessageRepository:
     def __init__(self, db: Session):
         self.db = db
 
-    def save(self, conversation_id: int, role: str, content: str):
-        """احفظ رسالة جديدة"""
+    def save(
+        self,
+        conversation_id: UUID,
+        role: str,
+        content: str,
+        file_path: str = None,
+        file_url: str = None,
+        file_name: str = None
+    ):
         message = Message(
             conversation_id=conversation_id,
             role=role,
-            content=content
+            content=content,
+            file_path=file_path,
+            file_url=file_url,
+            file_name=file_name
         )
         self.db.add(message)
         self.db.commit()
         self.db.refresh(message)
         return message
 
-    def get_conversation_messages(self, conversation_id: int):
-        """جيب كل الرسائل في conversation معينة"""
+    def get_conversation_messages(self, conversation_id: UUID):
         return (
             self.db.query(Message)
             .filter(Message.conversation_id == conversation_id)
