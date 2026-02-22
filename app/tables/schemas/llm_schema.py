@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
+from typing import List
 from uuid import UUID
 
 
@@ -12,3 +13,11 @@ class LLMRequest(BaseModel):
 class LLMResponse(BaseModel):
     conversation_id: UUID
     response: str
+
+from typing import List
+
+class EmbeddingRequest(BaseModel):
+    text: str
+
+class EmbeddingResponse(BaseModel):
+    embedding: List[float]

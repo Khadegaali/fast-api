@@ -27,7 +27,7 @@ class Settings:
     DB_HOST: str = os.getenv("DB_HOST")
     DB_PORT: str = os.getenv("DB_PORT", "5432")
     DB_NAME: str = os.getenv("DB_NAME")
-    
+    COHERE_API_KEY: str = os.getenv("COHERE_API_KEY")
     # Supabase
     SUPABASE_URL: str = os.getenv("SUPABASE_URL")
     SUPABASE_KEY: str = os.getenv("SUPABASE_SERVICE_KEY")
