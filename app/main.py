@@ -14,4 +14,7 @@ app.include_router(user_router)
 app.include_router(item_router)
 app.include_router(user_item_router)
 app.include_router(auth_router)
+<<<<<<< HEAD
+=======
 app.include_router(llm_router)
+>>>>>>> feat/llm-conversations-system

@@ -18,7 +18,7 @@ def me(
     service = UserService(user_repo)
     return service.get_user(db, user_id)
 
-#UPDATE MY PROFILE (protected - own data only)
+# UPDATE MY PROFILE (protected - own data only)
 @router.put("/me", response_model=UserResponse)
 def update_me(
     user: UserUpdate,
@@ -39,7 +39,7 @@ def patch_me(
     service = UserService(user_repo)
     return service.patch_user(db, current_user_id, user_data)
 
-#DELETE MY ACCOUNT (protected - own data only)
+# DELETE MY ACCOUNT (protected - own data only)
 @router.delete("/me")
 def delete_me(
     current_user_id: int = Depends(get_current_user_id),
@@ -48,8 +48,6 @@ def delete_me(
     user_repo = UserRepository(db)
     service = UserService(user_repo)
     return service.delete_user(db, current_user_id)
-
-
 
 @router.get("/", response_model=list[UserResponse])
 def get_users(
