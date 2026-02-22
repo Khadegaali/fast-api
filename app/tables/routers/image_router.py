@@ -24,7 +24,7 @@ async def analyze_image(
     current_user_id: UUID = Depends(get_current_user_id),
     db: Session = Depends(get_db)
 ):
-  
+   
     try:
         conv_repo = ConversationRepository(db)
         msg_repo = MessageRepository(db)
@@ -36,13 +36,14 @@ async def analyze_image(
         if conversation_id:
             try:
                 conv_uuid = UUID(conversation_id)
+                
                 conversation = conv_repo.get_by_id(conv_uuid, current_user_id)
                 if not conversation:
                     raise HTTPException(status_code=404, detail="Conversation not found")
             except ValueError:
                 raise HTTPException(status_code=400, detail="Invalid conversation_id format")
         
-       
+        
         if not conv_uuid:
             conversation = conv_repo.create(
                 user_id=current_user_id,
@@ -55,6 +56,7 @@ async def analyze_image(
         image_bytes = await file.read()
         filename = f"{uuid4()}_{file.filename}"
 
+        
         upload_result = image_storage.upload_image(
             user_id=str(current_user_id),
             file_content=image_bytes,
@@ -66,9 +68,10 @@ async def analyze_image(
         public_url = upload_result["file_url"]
         file_path = upload_result["file_path"]
 
-
+        
         base64_image = f"data:{file.content_type};base64," + base64.b64encode(image_bytes).decode()
 
+    
         response = co.chat(
             model="command-a-vision-07-2025",
             messages=[{
@@ -81,6 +84,8 @@ async def analyze_image(
         )
         
         analysis_text = response.message.content[0].text
+        
+        
         msg_repo.save(
             conversation_id=conv_uuid,
             role="user",
@@ -90,12 +95,14 @@ async def analyze_image(
             file_name=filename
         )
         
+    
         msg_repo.save(
             conversation_id=conv_uuid,
             role="assistant",
             content=analysis_text
         )
         
+    
         if is_new_conversation:
             conv_repo.update_title(conv_uuid, "Image Analysis")
 
