@@ -5,7 +5,7 @@ from app.tables.routers.item_router import router as item_router
 from app.tables.routers.user_item_router import router as user_item_router
 from app.tables.routers.auth_router import router as auth_router
 from app.tables.routers.llm_router import router as llm_router
-
+from app.tables.routers.image_router import router as image_router
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="FastAPI project")
@@ -14,7 +14,6 @@ app.include_router(user_router)
 app.include_router(item_router)
 app.include_router(user_item_router)
 app.include_router(auth_router)
-<<<<<<< HEAD
-=======
 app.include_router(llm_router)
->>>>>>> feat/llm-conversations-system
+app.include_router(image_router)
+
