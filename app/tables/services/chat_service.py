@@ -20,7 +20,6 @@ class ChatService:
         if not conversation:
             raise ValueError("Conversation not found")
 
-        self.message_repo.save(conversation_id, "user", message)
 
         
         old_messages = self.message_repo.get_conversation_messages(conversation_id)
@@ -37,4 +36,4 @@ class ChatService:
 
         self.conversation_repo.update_timestamp(conversation_id)
 
-        return response
+        return response0
