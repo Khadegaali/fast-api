@@ -15,4 +15,7 @@ eval*
 *.sqlite3
 .idea/
 .vscode/
+backup.sql
+docker-compose.yml
 EOF
+

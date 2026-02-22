@@ -11,3 +11,4 @@ class User(Base):
     password = Column(String, nullable=False) 
 
     user_items = relationship("UserItem", back_populates="user")
+    conversations = relationship("Conversation", back_populates="user")
