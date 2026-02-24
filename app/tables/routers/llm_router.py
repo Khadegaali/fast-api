@@ -183,12 +183,3 @@ def delete_conversation(
     if not deleted:
         raise HTTPException(status_code=404, detail="Conversation not found")
     return {"detail": "Conversation deleted"}
-
-
-@router.post("/embed", response_model=EmbeddingResponse)
-async def embed_text(request: EmbeddingRequest):
-    """
-    Generate embedding vector for a given text using Cohere embed-4.
-    """
-    embedding = cohere_client.get_embedding(request.text)
-    return {"embedding": embedding}

@@ -1,0 +1,1 @@
+from .embedding_model import TextEmbedding as Embedding

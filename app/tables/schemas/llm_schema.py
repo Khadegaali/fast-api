@@ -13,11 +13,3 @@ class LLMRequest(BaseModel):
 class LLMResponse(BaseModel):
     conversation_id: UUID
     response: str
-
-from typing import List
-
-class EmbeddingRequest(BaseModel):
-    text: str
-
-class EmbeddingResponse(BaseModel):
-    embedding: List[float]
