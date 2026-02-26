@@ -62,7 +62,8 @@ Title should be in the same language as the message. Only return the title, noth
         try:
             response = self.client.embed(
                 model=model,
-                texts=[text]
+                texts=[text],
+                input_type="search_document"
             )
             return response.embeddings[0]
         except Exception as e:
