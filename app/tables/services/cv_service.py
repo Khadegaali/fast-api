@@ -38,7 +38,7 @@ class CVService:
                 graduation_year=analysis.get("graduation_year"),
                 education=analysis.get("education"),
                 technical_skills=analysis.get("technical_skills"),
-                experience=analysis.get("experience"),      # 👈
+                experience=analysis.get("experience"),     
                 summary=analysis.get("summary"),
             )
         else:
@@ -56,7 +56,7 @@ class CVService:
                 graduation_year=analysis.get("graduation_year"),
                 education=analysis.get("education"),
                 technical_skills=analysis.get("technical_skills"),
-                experience=analysis.get("experience"),      # 👈
+                experience=analysis.get("experience"),      
                 summary=analysis.get("summary"),
             )
 
