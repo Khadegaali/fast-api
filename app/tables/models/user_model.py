@@ -9,7 +9,7 @@ class User(Base):
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     name = Column(String, nullable=False)
     email = Column(String, unique=True, nullable=False)
-    password = Column(String, nullable=False)  
+    password = Column(String, nullable=False) 
 
     user_items = relationship("UserItem", back_populates="user")
     conversations = relationship("Conversation", back_populates="user")
