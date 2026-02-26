@@ -1,4 +1,5 @@
 import os
+import json
 from cohere import Client
 
 class CohereClient:
@@ -70,3 +71,32 @@ Title should be in the same language as the transcript. Only return the title, n
             return response.embeddings[0]
         except Exception as e:
             raise Exception(f"Cohere Embedding Error: {str(e)}")
+
+    def analyze_cv(self, cv_text: str) -> dict:
+        try:
+            response = self.client.chat(
+                message=f"""Analyze this CV and return ONLY a JSON object with these exact keys:
+- graduation_year: the year of graduation (string)
+- education: degree and university name (string)
+- technical_skills: comma separated list of technical skills (string)
+- experience: list of job titles and companies (string)
+- summary: 3-4 sentence professional summary (string)
+
+CV:
+{cv_text[:5000]}
+
+Return only valid JSON, no extra text.""",
+                max_tokens=600,
+                temperature=0.2,
+                model="command-r-plus-08-2024"
+            )
+            text = response.text.strip().replace("```json", "").replace("```", "")
+            return json.loads(text)
+        except Exception:
+            return {
+                "graduation_year": None,
+                "education": None,
+                "technical_skills": None,
+                "experience": None,
+                "summary": None
+            }

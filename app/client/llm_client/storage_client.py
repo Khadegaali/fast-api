@@ -140,3 +140,38 @@ class VideoStorageClient:
             }
         except Exception as e:
             raise Exception(f"Video upload failed: {str(e)}")
+
+class CVStorageClient:
+    def __init__(self):
+        self.client: Client = create_client(
+            settings.SUPABASE_URL,
+            settings.SUPABASE_KEY
+        )
+        self.bucket = settings.SUPABASE_CV_BUCKET
+
+    def upload_cv(self, user_id: str, file_content: bytes, filename: str) -> dict:
+        try:
+            file_path = f"{user_id}/{filename}"
+            self.client.storage.from_(self.bucket).upload(
+                path=file_path,
+                file=file_content,
+                file_options={"content-type": "application/pdf", "upsert": "true"}
+            )
+            signed = self.client.storage.from_(self.bucket).create_signed_url(file_path, 3600)
+            return {
+                "file_path": file_path,
+                "file_url": signed["signedURL"],
+                "file_name": filename
+            }
+        except Exception as e:
+            raise Exception(f"CV upload failed: {str(e)}")
+
+    def delete_cv(self, file_path: str):
+        try:
+            self.client.storage.from_(self.bucket).remove([file_path])
+        except Exception:
+            pass
+
+    def get_signed_url(self, file_path: str, expires_in: int = 3600) -> str:
+        signed = self.client.storage.from_(self.bucket).create_signed_url(file_path, expires_in)
+        return signed["signedURL"]
