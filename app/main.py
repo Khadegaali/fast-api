@@ -7,6 +7,7 @@ from app.tables.routers.auth_router import router as auth_router
 from app.tables.routers.llm_router import router as llm_router
 from app.tables.routers.image_router import router as image_router
 from app.tables.routers.embedding_router import router as embedding_router
+from app.tables.routers.video_router import router as video_router
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="FastAPI project")
@@ -18,3 +19,4 @@ app.include_router(auth_router)
 app.include_router(llm_router)
 app.include_router(image_router)
 app.include_router(embedding_router)
+app.include_router(video_router)

@@ -35,7 +35,7 @@ class Settings:
     # Buckets 
     SUPABASE_BUCKET: str = os.getenv("SUPABASE_BUCKET", "upload_files")      
     SUPABASE_IMAGES_BUCKET: str = os.getenv("SUPABASE_images", "upload_images")  
-
+    SUPABASE_VIDEOS_BUCKET: str = os.getenv("SUPABASE_VIDEOS", "upload_videos")
     def __init__(self):
         print(f"  Settings loaded:")
         print(f"   DB_USER: {self.DB_USER}")
@@ -43,6 +43,7 @@ class Settings:
         print(f"   DB_PORT: {self.DB_PORT}")
         print(f"   BUCKET: {self.SUPABASE_BUCKET}")
         print(f"   IMAGES BUCKET: {self.SUPABASE_IMAGES_BUCKET}")
+        print(f"   VIDEOS BUCKET: {self.SUPABASE_VIDEOS_BUCKET}")
 
 
 settings = Settings()
