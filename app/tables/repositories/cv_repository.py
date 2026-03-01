@@ -15,9 +15,11 @@ class CVRepository:
         file_path: str,
         file_url: str,
         file_name: str,
+        name: str = None,
+        phone: str = None,
         graduation_year: str = None,
         education: str = None,
-        technical_skills: str = None,
+        technical_skills: list = None,
         experience: str = None,
         summary: str = None,
     ):
@@ -26,6 +28,8 @@ class CVRepository:
             file_path=file_path,
             file_url=file_url,
             file_name=file_name,
+            name=name,
+            phone=phone,
             graduation_year=graduation_year,
             education=education,
             technical_skills=technical_skills,
@@ -43,15 +47,19 @@ class CVRepository:
         file_path: str,
         file_url: str,
         file_name: str,
+        name: str = None,
+        phone: str = None,
         graduation_year: str = None,
         education: str = None,
-        technical_skills: str = None,
+        technical_skills: list = None,
         experience: str = None,
         summary: str = None,
     ):
         cv.file_path = file_path
         cv.file_url = file_url
         cv.file_name = file_name
+        cv.name = name
+        cv.phone = phone
         cv.graduation_year = graduation_year
         cv.education = education
         cv.technical_skills = technical_skills

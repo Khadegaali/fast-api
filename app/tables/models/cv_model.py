@@ -1,5 +1,5 @@
 from sqlalchemy import Column, String, Text, TIMESTAMP
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.dialects.postgresql import UUID, JSONB
 from app.database import Base
 import uuid
 
@@ -11,9 +11,11 @@ class CV(Base):
     file_path = Column(String, nullable=False)
     file_url = Column(String, nullable=False)
     file_name = Column(String, nullable=False)
+    name = Column(String, nullable=True)
+    phone = Column(String, nullable=True)
     graduation_year = Column(String, nullable=True)
     education = Column(Text, nullable=True)
-    technical_skills = Column(Text, nullable=True)
+    technical_skills = Column(JSONB, nullable=True)
     experience = Column(Text, nullable=True)
     summary = Column(Text, nullable=True)
     created_at = Column(TIMESTAMP, server_default="now()")
